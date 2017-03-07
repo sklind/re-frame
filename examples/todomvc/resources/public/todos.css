@@ -211,6 +211,13 @@ label[for='toggle-all'] {
 	text-decoration: line-through;
 }
 
+#todo-list li .created {
+  font-size: 14px;
+  float: right;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 #todo-list li .destroy {
 	display: none;
 	position: absolute;

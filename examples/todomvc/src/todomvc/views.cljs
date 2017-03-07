@@ -26,42 +26,44 @@
 (defn todo-item
   []
   (let [editing (reagent/atom false)]
-    (fn [{:keys [id done title]}]
+    (fn [{:keys [id done title date]}]
       [:li {:class (str (when done "completed ")
                         (when @editing "editing"))}
-        [:div.view
-          [:input.toggle
-            {:type "checkbox"
-             :checked done
-             :on-change #(dispatch [:toggle-done id])}]
-          [:label
-            {:on-double-click #(reset! editing true)}
-            title]
-          [:button.destroy
-            {:on-click #(dispatch [:delete-todo id])}]]
-        (when @editing
-          [todo-input
-            {:class "edit"
-             :title title
-             :on-save #(dispatch [:save id %])
-             :on-stop #(reset! editing false)}])])))
+       [:div.view
+        [:input.toggle
+         {:type "checkbox"
+          :checked done
+          :on-change #(dispatch [:toggle-done id])}]
+        [:label
+         {:on-double-click #(reset! editing true)}
+         title
+         [:span.created
+          (.toDateString (js/Date. date))]]
+        [:button.destroy
+         {:on-click #(dispatch [:delete-todo id])}]]
+       (when @editing
+         [todo-input
+          {:class "edit"
+           :title title
+           :on-save #(dispatch [:save id %])
+           :on-stop #(reset! editing false)}])])))
 
 
 (defn task-list
   []
   (let [visible-todos @(subscribe [:visible-todos])
         all-complete? @(subscribe [:all-complete?])]
-      [:section#main
-        [:input#toggle-all
-          {:type "checkbox"
-           :checked all-complete?
-           :on-change #(dispatch [:complete-all-toggle (not all-complete?)])}]
-        [:label
-          {:for "toggle-all"}
-          "Mark all as complete"]
-        [:ul#todo-list
-          (for [todo  visible-todos]
-            ^{:key (:id todo)} [todo-item todo])]]))
+    [:section#main
+     [:input#toggle-all
+      {:type "checkbox"
+       :checked all-complete?
+       :on-change #(dispatch [:complete-all-toggle (not all-complete?)])}]
+     [:label
+      {:for "toggle-all"}
+      "Mark all as complete"]
+     [:ul#todo-list
+      (for [todo  visible-todos]
+        ^{:key (:id todo)} [todo-item todo])]]))
 
 
 (defn footer-controls
