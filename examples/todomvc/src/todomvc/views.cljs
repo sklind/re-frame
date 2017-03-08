@@ -26,7 +26,7 @@
 (defn todo-item
   []
   (let [editing (reagent/atom false)]
-    (fn [{:keys [id done title]}]
+    (fn [{:keys [id done title date]}]
       [:li {:class (str (when done "completed ")
                         (when @editing "editing"))}
         [:div.view
@@ -36,7 +36,9 @@
              :on-change #(dispatch [:toggle-done id])}]
           [:label
             {:on-double-click #(reset! editing true)}
-            title]
+            title
+            [:span.created
+             (.toDateString (js/Date. date))]]
           [:button.destroy
             {:on-click #(dispatch [:delete-todo id])}]]
         (when @editing

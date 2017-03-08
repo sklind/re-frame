@@ -87,7 +87,7 @@
   ;; The "path" interceptor in `todo-interceptors` means 1st parameter is :todos
   (fn [todos [text]]
     (let [id (allocate-next-id todos)]
-      (assoc todos id {:id id :title text :done false}))))
+      (assoc todos id {:id id :title text :done false :date (.getTime (js/Date.))}))))
 
 
 (reg-event-db
