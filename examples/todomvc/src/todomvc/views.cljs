@@ -29,18 +29,18 @@
     (fn [{:keys [id done title date]}]
       [:li {:class (str (when done "completed ")
                         (when @editing "editing"))}
-         [:div.view
+        [:div.view
           [:input.toggle
-           {:type "checkbox"
-            :checked done
-            :on-change #(dispatch [:toggle-done id])}]
+            {:type "checkbox"
+             :checked done
+             :on-change #(dispatch [:toggle-done id])}]
           [:label
-           {:on-double-click #(reset! editing true)}
-           title
-           [:span.created
-            (.toDateString (js/Date. date))]]
+            {:on-double-click #(reset! editing true)}
+            title
+            [:span.created
+             (.toDateString (js/Date. date))]]
           [:button.destroy
-           {:on-click #(dispatch [:delete-todo id])}]]
+            {:on-click #(dispatch [:delete-todo id])}]]
         (when @editing
           [todo-input
             {:class "edit"
