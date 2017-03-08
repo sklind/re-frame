@@ -76,18 +76,18 @@
 
 ;; usage:  (dispatch [:add-todo  "Finish comments"])
 (reg-event-db                     ;; given the text, create a new todo
- :add-todo
+  :add-todo
 
- ;; The standard set of interceptors, defined above, which we
- ;; apply to all todos-modifiing event handlers. Looks after
- ;; writing todos to local store, etc.
- todo-interceptors
+  ;; The standard set of interceptors, defined above, which we
+  ;; apply to all todos-modifiing event handlers. Looks after
+  ;; writing todos to local store, etc.
+  todo-interceptors
 
- ;; The event handler function.
- ;; The "path" interceptor in `todo-interceptors` means 1st parameter is :todos
- (fn [todos [text]]
-   (let [id (allocate-next-id todos)]
-     (assoc todos id {:id id :title text :done false :date (.getTime (js/Date.))}))))
+  ;; The event handler function.
+  ;; The "path" interceptor in `todo-interceptors` means 1st parameter is :todos
+  (fn [todos [text]]
+    (let [id (allocate-next-id todos)]
+      (assoc todos id {:id id :title text :done false :date (.getTime (js/Date.))}))))
 
 
 (reg-event-db
