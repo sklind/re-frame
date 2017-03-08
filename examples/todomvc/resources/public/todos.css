@@ -214,8 +214,7 @@ label[for='toggle-all'] {
 #todo-list li .created {
   font-size: 14px;
   float: right;
-  margin-top: auto;
-  margin-bottom: auto;
+  word-break: break-all;
 }
 
 #todo-list li .destroy {
